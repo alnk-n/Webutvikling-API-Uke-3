@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Game } from "../types/types";
 import GameCard from "./GameCard";
-import DropdownMenu from "./DropdownMenu";
 
 function GameGrid() {
   const [games, setGames] = useState<Game[] | null>([]);
@@ -25,12 +24,11 @@ function GameGrid() {
 
   return (
     <>
-      <DropdownMenu />
-      <div className="bg-zinc-900 grid grid-cols-5 gap-4 p-4">
+      <section className="w-fit mx-auto grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 justify-items-center justify-center gap-y-10 gap-x-10 mb-5 p-5">
         {games.map((game) => (
           <GameCard key={game.id} game={game} />
         ))}
-      </div>
+      </section>
     </>
   );
 }
