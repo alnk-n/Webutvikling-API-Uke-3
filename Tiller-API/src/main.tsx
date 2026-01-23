@@ -7,8 +7,15 @@ import "./index.css";
 
 import Navbar from "./Components/Navbar";
 import GameGrid from "./Components/GameGrid";
+import HomePage from "./Components/HomePage";
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60_000,
+    },
+  },
+});
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -16,10 +23,9 @@ createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Navigate to="/home" replace />} />
-          <Route path="/home" element={<GameGrid />} />
-          <Route path="/categories" element={<div>Categories</div>} />
-          <Route path="/search" element={<div>Search</div>} />
+          <Route path="/" element={<Navigate to="/games" replace />} />
+          <Route path="/games" element={<GameGrid />} />
+          <Route path="/home" element={<HomePage />} />
         </Routes>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />

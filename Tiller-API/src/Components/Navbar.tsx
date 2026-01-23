@@ -18,7 +18,7 @@ function Navbar() {
         </NavLink>
 
         <NavLink
-          to="/categories"
+          to="/games"
           className={({ isActive }) =>
             `text-lg font-semibold px-4 py-2 rounded-md transition-colors ${
               isActive
@@ -27,20 +27,7 @@ function Navbar() {
             }`
           }
         >
-          Categories
-        </NavLink>
-
-        <NavLink
-          to="/search"
-          className={({ isActive }) =>
-            `text-lg font-semibold px-4 py-2 rounded-md transition-colors ${
-              isActive
-                ? "bg-amber-600 text-white"
-                : "bg-slate-500 text-gray-100 hover:bg-slate-400 hover:text-white"
-            }`
-          }
-        >
-          Search
+          Games
         </NavLink>
       </div>
     </nav>
