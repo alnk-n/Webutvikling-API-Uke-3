@@ -7,7 +7,7 @@ type Props = {
 
 function GameCard({ game }: Props) {
   return (
-    <body className="bg-zinc-200">
+    <div className="bg-zinc-200">
       <div className="w-80 bg-slate-800 shadow-md rounded-xl duration-100 hover:scale-105 hover:shadow-xl">
         <a href="#">
           <img
@@ -30,7 +30,7 @@ function GameCard({ game }: Props) {
           </div>
         </a>
         </div>
-    </body>
+    </div>
   );
 }
 

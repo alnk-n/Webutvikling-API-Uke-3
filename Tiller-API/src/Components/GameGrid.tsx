@@ -1,26 +1,22 @@
-import { useEffect, useState } from "react";
-import type { Game } from "../types/types";
+import { useState } from "react";
 import GameCard from "./GameCard";
+import { useGames } from "../hooks/useGames";
 
 function GameGrid() {
-  const [games, setGames] = useState<Game[] | null>([]);
+  const limit = 50;
+  const [page, setPage] = useState(0); // page 0 = first page
 
-  useEffect(() => {
-    fetch("https://tillerapi.tiller.blog/api/v2/games?offset=0&limit=50", {
-      headers: {
-        "x-api-key": "elev253013",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.data);
-        setGames(data.data);
-      });
-  }, []);
+  const offset = page * limit;
 
-  if (!games) {
-    return <div>Loading...</div>;
-  }
+  const { data, isLoading, isError, error } = useGames(offset, limit);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error.message}</div>;
+
+  const games = data?.data ?? [];
+
+  const canGoBack = page > 0;
+  const canGoNext = games.length === limit; 
 
   return (
     <>
@@ -28,6 +24,22 @@ function GameGrid() {
         {games.map((game) => (
           <GameCard key={game.id} game={game} />
         ))}
+
+        <div className="flex gap-4 items-center justify-center mb-4 col-span-full">
+          <button
+            onClick={() => setPage((p) => p - 1)}
+            disabled={!canGoBack}
+            className="px-3 py-2 rounded bg-slate-500 text-gray-100 hover:bg-slate-400 hover:text-white hover:cursor-pointer disabled:opacity-50 disabled:hover:bg-slate-500 disabled:hover:text-gray-100 disabled:hover:cursor-default"
+          >Previous Page
+          </button>
+          
+          <button
+            onClick={() => setPage((p) => p + 1)}
+            disabled={!canGoNext}
+            className="px-3 py-2 rounded bg-slate-500 text-gray-100 hover:bg-slate-400 hover:text-white hover:cursor-pointer disabled:opacity-50 disabled:hover:bg-slate-500 disabled:hover:text-gray-100 disabled:hover:cursor-default"
+          >Next Page
+          </button>
+        </div>
       </section>
     </>
   );
